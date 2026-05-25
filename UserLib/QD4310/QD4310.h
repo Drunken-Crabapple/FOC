@@ -14,7 +14,9 @@
 extern "C" {
 #endif
 
-typedef enum {
+typedef uint8_t QD4310_StorageStatus;
+
+enum {
     QD4310_STORAGE_NONE = 0x00,
     QD4310_STORAGE_BASE_CALIBRATE_OK = 0x01,
     QD4310_STORAGE_ANTICOGGING_CALIBRATE_OK = 0x02,
@@ -22,7 +24,7 @@ typedef enum {
     QD4310_STORAGE_LIMIT_OK = 0x08,
     QD4310_STORAGE_PLUG_OK = 0x10,
     QD4310_STORAGE_ZERO_POS_OK = 0x20,
-} QD4310_StorageStatus;
+};
 
 typedef struct {
     FOC_t foc;

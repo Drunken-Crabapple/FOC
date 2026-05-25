@@ -326,6 +326,7 @@ void FOC_AnticoggingCalibrate(FOC_t *foc) {
     if (!foc->enabled) return;
     if (!foc->calibrated) return;
     if (foc->started) return;
+    if (foc->anticogging_map == NULL) return;
 
     foc->anticogging_calibrated = false;
     FOC_Ctrl(foc, FOC_CTRL_CURRENT, 0.0f);
