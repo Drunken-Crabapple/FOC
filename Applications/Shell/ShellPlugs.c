@@ -48,12 +48,17 @@ static signed short silent(char *data, unsigned short len) {
 
 #define PRINT(...) do { if (shell.write != silent) { printf(__VA_ARGS__); printf("\r\n"); } } while (0)
 
-void print_version(void) {
+int print_version(int argc, char *argv[]) {
+    (void)argc;
+    (void)argv;
     PRINT("Hardware version %s", FOC_HARDWARE_VERSION);
     PRINT("Software version %s", FOC_SOFTWARE_VERSION);
+    return 0;
 }
 
-void foc_info(void) {
+int foc_info(int argc, char *argv[]) {
+    (void)argc;
+    (void)argv;
     PRINT("Hardware Info:");
     PRINT("  Pole pairs       : %d ", FOC_POLE_PAIRS);
     PRINT("  KV rating        : %.1f rpm/V", FOC_KV);
@@ -62,9 +67,12 @@ void foc_info(void) {
     PRINT("  Phase resistance : %.2f ohm", FOC_PHASE_RESISTANCE);
     PRINT("  Torque constant  : %.2f Nm/A", FOC_TORQUE_CONSTANT);
     PRINT("  Max current      : %.2f A", FOC_MAX_CURRENT);
+    return 0;
 }
 
-void foc_status(void) {
+int foc_status(int argc, char *argv[]) {
+    (void)argc;
+    (void)argv;
     PRINT("Motor Status:");
     PRINT("  CAN ID       : %03d", qd4310.id);
     PRINT("  Status       : %s", qd4310.foc.started ? "enabled" : "disabled");
@@ -73,6 +81,7 @@ void foc_status(void) {
     PRINT("  Speed        : %.2f rpm", qd4310.foc.speed);
     PRINT("  Angle        : %.2f rad", QD4310_GetAngle(&qd4310));
     PRINT("  Voltage      : %.2f V", qd4310.foc.voltage);
+    return 0;
 }
 
 void foc_config_list(void) {
@@ -89,10 +98,10 @@ void foc_config_list(void) {
     PRINT("uart.baud_rate = %lu", qd4310.uart_baud_rate);
 }
 
-void foc_config(int argc, char *argv[]) {
+int foc_config(int argc, char *argv[]) {
     if (argc < 2 || strcmp(argv[1], "--list") == 0) {
         foc_config_list();
-        return;
+        return 0;
     }
     const char *key = argv[1];
     const char *value = NULL;
@@ -112,11 +121,11 @@ void foc_config(int argc, char *argv[]) {
     if (strcmp(key, "zero_pos") == 0) {
         QD4310_SetZeroPosition(&qd4310, value ? atof_lite(value) : QD4310_GetAngle(&qd4310));
         PRINT("Setting config [zero_pos]");
-        return;
+        return 0;
     }
     if (!value) {
         PRINT("Missing value for config [%s]", key);
-        return;
+        return 0;
     }
     float valf = atof_lite(value);
     if (strcmp(key, "pid.speed.kp") == 0) QD4310_SetPID(&qd4310, valf, NAN, NAN, NAN, NAN, NAN);
@@ -131,15 +140,16 @@ void foc_config(int argc, char *argv[]) {
     else if (strcmp(key, "uart.baud_rate") == 0) QD4310_SetUartBaudRate(&qd4310, (uint32_t)valf);
     else {
         PRINT("Unknown config target: %s", key);
-        return;
+        return 0;
     }
     PRINT("Setting config [%s] = %.3g", key, valf);
+    return 0;
 }
 
-void foc_ctrl(int argc, char *argv[]) {
+int foc_ctrl(int argc, char *argv[]) {
     if (argc < 3) {
         PRINT("Usage: ctrl [current|low_speed|speed|step_angle|angle] VALUE");
-        return;
+        return 0;
     }
     const char *key = argv[1];
     float valf = atof_lite(argv[2]);
@@ -150,55 +160,77 @@ void foc_ctrl(int argc, char *argv[]) {
     else if (strcmp(key, "low_speed") == 0) QD4310_Ctrl(&qd4310, FOC_CTRL_LOW_SPEED, valf);
     else {
         PRINT("Unknown ctrl target: %s", key);
-        return;
+        return 0;
     }
     PRINT("Setting %s = %.2f", key, valf);
+    return 0;
 }
 
-void foc_enable(void) {
+int foc_enable(int argc, char *argv[]) {
+    (void)argc;
+    (void)argv;
     QD4310_Start(&qd4310);
     PRINT(qd4310.foc.started ? "QDrive enabled" : "enable failed, please calibrate first");
+    return 0;
 }
 
-void foc_disable(void) {
+int foc_disable(int argc, char *argv[]) {
+    (void)argc;
+    (void)argv;
     QD4310_Stop(&qd4310);
     PRINT("QDrive disabled");
+    return 0;
 }
 
-void foc_calibrate(void) {
+int foc_calibrate(int argc, char *argv[]) {
+    (void)argc;
+    (void)argv;
     if (qd4310.foc.started) {
         PRINT("QDrive is running, please disable it first");
-        return;
+        return 0;
     }
     PRINT("QDrive calibration started, please wait...");
     QD4310_Calibrate(&qd4310);
     PRINT(qd4310.foc.calibrated ? "QDrive calibration completed" : "QDrive calibration failed");
+    return 0;
 }
 
-void foc_restore(void) {
+int foc_restore(int argc, char *argv[]) {
+    (void)argc;
+    (void)argv;
     QD4310_RestoreCalibration(&qd4310);
     PRINT("QDrive factory restore completed");
     foc_config_list();
+    return 0;
 }
 
-void foc_store(void) {
+int foc_store(int argc, char *argv[]) {
+    (void)argc;
+    (void)argv;
     if (qd4310.foc.started) {
         PRINT("QDrive is running, please disable it first");
-        return;
+        return 0;
     }
     QD4310_FreezeStorageCalibration(&qd4310,
         (QD4310_StorageStatus)(QD4310_STORAGE_PID_PARAMETER_OK |
                                QD4310_STORAGE_LIMIT_OK |
                                QD4310_STORAGE_PLUG_OK));
     PRINT("Store configuration completed");
+    return 0;
 }
 
-void shell_reboot(void) {
+int shell_reboot(int argc, char *argv[]) {
+    (void)argc;
+    (void)argv;
     NVIC_SystemReset();
+    return 0;
 }
 
-void shell_silent(void) {
+int shell_silent(int argc, char *argv[]) {
+    (void)argc;
+    (void)argv;
     shell.write = silent;
+    return 0;
 }
 
 SHELL_EXPORT_CMD(SHELL_CMD_DISABLE_RETURN|SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_MAIN),

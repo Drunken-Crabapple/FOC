@@ -24,6 +24,12 @@ enum {
     QD4310_STORAGE_LIMIT_OK = 0x08,
     QD4310_STORAGE_PLUG_OK = 0x10,
     QD4310_STORAGE_ZERO_POS_OK = 0x20,
+    QD4310_STORAGE_ALL_OK = QD4310_STORAGE_BASE_CALIBRATE_OK |
+                             QD4310_STORAGE_ANTICOGGING_CALIBRATE_OK |
+                             QD4310_STORAGE_PID_PARAMETER_OK |
+                             QD4310_STORAGE_LIMIT_OK |
+                             QD4310_STORAGE_PLUG_OK |
+                             QD4310_STORAGE_ZERO_POS_OK,
 };
 
 typedef struct {
