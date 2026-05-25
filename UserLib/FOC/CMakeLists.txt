@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.30)
+cmake_minimum_required(VERSION 3.22)
 
-project(foc)
+project(foc LANGUAGES C)
 
 add_library(foc INTERFACE)
 
