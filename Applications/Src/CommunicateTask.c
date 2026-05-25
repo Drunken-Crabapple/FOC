@@ -2,19 +2,24 @@
 #include "fdcan.h"
 #include "usart.h"
 #include "QD4310.h"
+#include "FreeRTOS.h"
 #include "queue.h"
 #include "task.h"
 #include <math.h>
 #include <string.h>
 #include <stdint.h>
 
-typedef enum {
+typedef uint8_t PlugType;
+
+enum {
     PLUG_CAN = 0x00,
     PLUG_UART = 0x01,
     PLUG_PWM = 0x02,
-} PlugType;
+};
 
-typedef enum {
+typedef uint8_t CmdType;
+
+enum {
     CMD_NOP = 0x00,
     CMD_ENABLE = 0x01,
     CMD_DISABLE = 0x02,
@@ -23,7 +28,7 @@ typedef enum {
     CMD_ANGLE_CTRL = 0x05,
     CMD_LOW_SPEED_CTRL = 0x06,
     CMD_STEP_ANGLE_CTRL = 0x07,
-} CmdType;
+};
 
 typedef union {
     struct __attribute__((packed)) {
@@ -37,6 +42,9 @@ typedef struct {
     RxData cmd;
     PlugType plug;
 } RxCommand;
+
+_Static_assert(sizeof(RxData) == 3U, "RxData must match original C++ 3-byte command payload");
+_Static_assert(sizeof(RxCommand) == 4U, "RxCommand must match original C++ command + plug layout");
 
 uint8_t UART_RxBuffer[10];
 static QueueHandle_t xQueue1;
@@ -136,7 +144,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
     if (hfdcan == &hfdcan1) {
         static FDCAN_RxHeaderTypeDef rx_header;
-        static RxCommand rx_command = {.cmd = {0}, .plug = PLUG_CAN};
+        static RxCommand rx_command = {.cmd = {.raw = {0}}, .plug = PLUG_CAN};
         if (HAL_FDCAN_GetRxFifoFillLevel(hfdcan, FDCAN_RX_FIFO0)) {
             HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rx_header, rx_command.cmd.raw);
             if (rx_header.Identifier == 0x400U + qd4310.id && rx_header.DataLength == 3U) {
@@ -150,7 +158,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
     if (huart->Instance == huart3.Instance) {
-        static RxCommand rx_command = {.cmd = {0}, .plug = PLUG_UART};
+        static RxCommand rx_command = {.cmd = {.raw = {0}}, .plug = PLUG_UART};
         if (UART_RxBuffer[0] == qd4310.id && Size == 5U &&
             CRC8(UART_RxBuffer, 4U, 0x07, 0x00, 0x00, false, false) == UART_RxBuffer[4]) {
             memcpy(rx_command.cmd.raw, UART_RxBuffer + 1U, sizeof(rx_command.cmd.raw));

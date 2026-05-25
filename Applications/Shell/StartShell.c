@@ -3,6 +3,7 @@
 #include "usb_device.h"
 #include "shell.h"
 #include "retarget/retarget.h"
+#include "FreeRTOS.h"
 #include "task.h"
 
 Shell shell;
