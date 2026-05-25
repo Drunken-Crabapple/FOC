@@ -43,6 +43,7 @@ void FOC_InitObject(FOC_t *foc,
     foc->pid_current_d = *pid_current_d;
     foc->pid_speed = *pid_speed;
     foc->pid_angle = *pid_angle;
+    foc->anticogging_map = foc->anticogging_map_storage;
     foc->encoder_direction = true;
     foc->phase_resistance = NAN;
     foc->phase_inductance = NAN;
@@ -276,7 +277,7 @@ void FOC_CtrlISR(FOC_t *foc) {
             foc->target_iq = PID_Calc(&foc->pid_speed, foc->speed);
             /* fall through */
         case FOC_CTRL_CURRENT:
-            if (foc->anticogging_enabled && foc->anticogging_calibrated && !foc->anticogging_calibrating) {
+            if (foc->anticogging_enabled && foc->anticogging_calibrated && foc->anticogging_calibrating) {
                 const uint16_t index = (uint16_t)(angle * (float)FOC_MAP_LEN * 0.5f / FOC_PI + 0.5f) % FOC_MAP_LEN;
                 PID_SetTarget(&foc->pid_current_q, foc->target_iq + foc->anticogging_map[index]);
             } else {

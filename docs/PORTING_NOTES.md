@@ -11,11 +11,14 @@ This repository is a C port of the original QDrive C++ FOC firmware.
 - Application tasks, shell commands, communication task, storage, and retarget layer converted from `.cpp` to `.c`.
 - CMake changed to C/ASM only; C++ compiler and standard library are no longer linked.
 
-## Intentional Fixes During Port
+## Porting Policy
 
-- Anticogging compensation now applies during normal operation when enabled and calibrated, not only while calibrating.
-- Anticogging map storage now reads and writes `sizeof(anticogging_map)` instead of pointer size.
-- STM32CubeG4 dependency path is now configurable through `STM32CUBE_G4_PATH`.
+The C port keeps the original C++ control behavior as the reference behavior.
+The goal is to replace C++ language features with C equivalents without changing
+validated FOC runtime logic.
+
+The STM32CubeG4 dependency path is configurable through `STM32CUBE_G4_PATH` so
+the project is not tied to the original author's Windows user directory.
 
 ## Build Requirements
 
@@ -29,4 +32,3 @@ If the package is installed elsewhere, configure with:
 ```powershell
 cmake -S . -B build -DSTM32CUBE_G4_PATH="D:/path/to/STM32Cube_FW_G4_V1.6.2"
 ```
-

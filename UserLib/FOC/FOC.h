@@ -68,7 +68,8 @@ typedef struct {
     float iu_offset;
     float iv_offset;
     float zero_electric_angle;
-    float anticogging_map[FOC_MAP_LEN];
+    float anticogging_map_storage[FOC_MAP_LEN];
+    float *anticogging_map;
 
     float target_iq;
     float angle;
