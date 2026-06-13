@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <string.h>
 #include "retarget.h"
+#include "cdc_tx_buffer.h"
 #include "usbd_cdc_if.h"
 #include "sys_public.h"
 
@@ -15,6 +16,7 @@
 static uint8_t rx_queue[RX_QUEUE_SIZE];
 static uint16_t rx_head;
 static uint16_t rx_tail;
+static CdcTxBuffer tx_buffer;
 
 static int rx_is_empty(void) {
     return rx_head == rx_tail;
@@ -41,6 +43,7 @@ void RetargetInit(void) {
 #if USE_TinyPrintf == 0 && STDIO_SUPPORT == 1
     setvbuf(stdout, NULL, _IONBF, 0);
 #endif
+    CDC_TxBuffer_Init(&tx_buffer, CDC_Transmit_FS);
 }
 
 void CDC_Receive_FS_Callback(uint8_t *Buf, uint32_t *Len) {
@@ -50,7 +53,9 @@ void CDC_Receive_FS_Callback(uint8_t *Buf, uint32_t *Len) {
     }
 }
 
-void CDC_TransmitCplt_FS_Callback(void) {}
+void CDC_TransmitCplt_FS_Callback(void) {
+    CDC_TxBuffer_TransmitComplete(&tx_buffer);
+}
 
 signed short shellRead(char *data, unsigned short len) {
     signed short i = 0;
@@ -64,7 +69,7 @@ signed short shellRead(char *data, unsigned short len) {
 }
 
 signed short shellWrite(char *data, unsigned short len) {
-    return CDC_Transmit_FS((uint8_t *)data, len) == USBD_OK ? 0 : -1;
+    return CDC_TxBuffer_Write(&tx_buffer, data, len) ? 0 : -1;
 }
 
 #if USE_TinyPrintf == 1

@@ -42,7 +42,7 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
+#define QDRIVE_USB_SHELL_ONLY 0
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -121,10 +121,14 @@ void MX_FREERTOS_Init(void) {
   DebugTaskHandle = osThreadNew(StartDebugTask, NULL, &DebugTask_attributes);
 
   /* creation of FOCTask */
+#if QDRIVE_USB_SHELL_ONLY == 0
   FOCTaskHandle = osThreadNew(StartFOCTask, NULL, &FOCTask_attributes);
+#endif
 
   /* creation of CommunicateTask */
+#if QDRIVE_USB_SHELL_ONLY == 0
   CommunicateTaskHandle = osThreadNew(StartCommunicateTask, NULL, &CommunicateTask_attributes);
+#endif
 
   /* creation of StartShell */
   StartShellHandle = osThreadNew(StartStartShell, NULL, &StartShell_attributes);
@@ -148,8 +152,7 @@ void MX_FREERTOS_Init(void) {
 /* USER CODE END Header_StartDebugTask */
 __weak void StartDebugTask(void *argument)
 {
-  /* init code for USB_Device */
-  MX_USB_Device_Init();
+  (void)argument;
   /* USER CODE BEGIN StartDebugTask */
   /* Infinite loop */
   for(;;)
@@ -163,4 +166,3 @@ __weak void StartDebugTask(void *argument)
 /* USER CODE BEGIN Application */
 
 /* USER CODE END Application */
-

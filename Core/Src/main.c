@@ -63,6 +63,21 @@ void MX_FREERTOS_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+static void USB_CRS_Config(void)
+{
+  RCC_CRSInitTypeDef crs_init = {0};
+
+  __HAL_RCC_CRS_CLK_ENABLE();
+
+  crs_init.Prescaler = RCC_CRS_SYNC_DIV1;
+  crs_init.Source = RCC_CRS_SYNC_SOURCE_USB;
+  crs_init.Polarity = RCC_CRS_SYNC_POLARITY_RISING;
+  crs_init.ReloadValue = RCC_CRS_RELOADVALUE_DEFAULT;
+  crs_init.ErrorLimitValue = RCC_CRS_ERRORLIMIT_DEFAULT;
+  crs_init.HSI48CalibrationValue = RCC_CRS_HSI48CALIBRATION_DEFAULT;
+
+  HAL_RCCEx_CRSConfig(&crs_init);
+}
 
 /* USER CODE END 0 */
 
@@ -90,6 +105,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
+  USB_CRS_Config();
 
   /* USER CODE END SysInit */
 

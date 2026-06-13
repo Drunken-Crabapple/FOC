@@ -33,6 +33,7 @@ void StartStartShell(void *argument) {
     USB_Disconnected();
     MX_USB_Device_Init();
     delay(100);
+    RetargetInit();
     shell.read = shellRead;
     shell.write = shellWrite;
     shellInit(&shell, shellBuffer, 256);

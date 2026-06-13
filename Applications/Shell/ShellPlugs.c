@@ -6,8 +6,13 @@
 #include "QD4310.h"
 #include "FOC_config.h"
 #include "main.h"
+#include "usb_device.h"
+#include "usbd_core.h"
 
 extern Shell shell;
+extern USBD_HandleTypeDef hUsbDeviceFS;
+
+#define STM32_SYSTEM_BOOTLOADER_ADDRESS 0x1FFF0000UL
 
 static float atof_lite(const char *s) {
     if (!s) return 0.0f;
@@ -226,6 +231,51 @@ int shell_reboot(int argc, char *argv[]) {
     return 0;
 }
 
+static void jump_to_system_bootloader(void) {
+    const uint32_t bootloader_sp = *(__IO uint32_t *)STM32_SYSTEM_BOOTLOADER_ADDRESS;
+    const uint32_t bootloader_pc = *(__IO uint32_t *)(STM32_SYSTEM_BOOTLOADER_ADDRESS + 4U);
+    void (*bootloader_entry)(void) = (void (*)(void))bootloader_pc;
+
+    __disable_irq();
+    USBD_DeInit(&hUsbDeviceFS);
+    HAL_RCC_DeInit();
+    HAL_DeInit();
+
+    SysTick->CTRL = 0U;
+    SysTick->LOAD = 0U;
+    SysTick->VAL = 0U;
+
+    for (uint32_t i = 0U; i < 8U; ++i) {
+        NVIC->ICER[i] = 0xFFFFFFFFU;
+        NVIC->ICPR[i] = 0xFFFFFFFFU;
+    }
+
+    __DSB();
+    __ISB();
+    __set_MSP(bootloader_sp);
+    bootloader_entry();
+
+    while (1) {
+    }
+}
+
+int shell_upgrade(int argc, char *argv[]) {
+    (void)argc;
+    (void)argv;
+
+    const uint32_t bootloader_sp = *(__IO uint32_t *)STM32_SYSTEM_BOOTLOADER_ADDRESS;
+    if ((bootloader_sp & 0x2FFE0000UL) != 0x20000000UL) {
+        PRINT("System bootloader vector invalid");
+        return 0;
+    }
+
+    QD4310_Stop(&qd4310);
+    PRINT("Entering USB DFU bootloader...");
+    HAL_Delay(100U);
+    jump_to_system_bootloader();
+    return 0;
+}
+
 int shell_silent(int argc, char *argv[]) {
     (void)argc;
     (void)argv;
@@ -239,6 +289,8 @@ SHELL_EXPORT_CMD(SHELL_CMD_DISABLE_RETURN|SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE
                  version, print_version, Show version info);
 SHELL_EXPORT_CMD(SHELL_CMD_DISABLE_RETURN|SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_MAIN),
                  reboot, shell_reboot, reboot system);
+SHELL_EXPORT_CMD(SHELL_CMD_DISABLE_RETURN|SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_MAIN),
+                 upgrade, shell_upgrade, Enter USB DFU bootloader);
 SHELL_EXPORT_CMD(SHELL_CMD_DISABLE_RETURN|SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_MAIN),
                  store, foc_store, Store configurations);
 SHELL_EXPORT_CMD(SHELL_CMD_DISABLE_RETURN|SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_MAIN),

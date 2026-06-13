@@ -1,5 +1,11 @@
-.idea
-build
-cmake-build-debug
+build/
+cmake-build-debug/
+mx.scratch/
+.vscode/
+.settings/
+.cache/
+backup/
 *.jdebug
 *.jdebug.user
+*.exe
+COM*

@@ -1,8 +1,3 @@
-/**
- * @file Storage_EmbeddedFlash.h
- * @brief C adapter for STM32 embedded flash storage.
- */
-
 #ifndef STORAGE_EMBEDDED_FLASH_H
 #define STORAGE_EMBEDDED_FLASH_H
 

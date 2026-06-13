@@ -56,6 +56,7 @@ static uint8_t CRC8(const uint8_t *data, uint32_t len, uint8_t polynomial, uint8
 
 void StartCommunicateTask(void *argument) {
     (void)argument;
+    vTaskDelay(pdMS_TO_TICKS(1500));
     xQueue1 = xQueueCreate(5, sizeof(RxCommand));
     while (!qd4310.foc.initialized) {
         delay(10);
