@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\..\Output\FOC_QD4310_Keil.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\..\Output\FOC_QD4310_Keil.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6090000: Last Updated: Sun Jun 14 16:13:09 2026
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6090000: Last Updated: Sun Jun 14 16:26:09 2026
 <BR><P>
 <H3>Maximum Stack Usage =        792 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -2574,10 +2574,10 @@ Global Symbols
 <P><STRONG><a name="[22e]"></a>QD4310_FreezeStorageCalibration</STRONG> (Thumb, 494 bytes, Stack size 24 bytes, qd4310.o(.text.QD4310_FreezeStorageCalibration))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = QD4310_FreezeStorageCalibration
 </UL>
-<BR>[Called By]<UL><LI><a href="#[23a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_SetZeroPosition
+<BR>[Called By]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;foc_store
+<LI><a href="#[23a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_SetZeroPosition
 <LI><a href="#[235]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_RestoreCalibration
 <LI><a href="#[22d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_Calibrate
-<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;foc_store
 </UL>
 
 <P><STRONG><a name="[230]"></a>QD4310_GetAngle</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, qd4310.o(.text.QD4310_GetAngle))
@@ -2628,8 +2628,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[238]"></a>QD4310_SetID</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, qd4310.o(.text.QD4310_SetID))
-<BR><BR>[Called By]<UL><LI><a href="#[235]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_RestoreCalibration
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;foc_config
+<BR><BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;foc_config
+<LI><a href="#[235]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_RestoreCalibration
 </UL>
 
 <P><STRONG><a name="[237]"></a>QD4310_SetLimit</STRONG> (Thumb, 68 bytes, Stack size 24 bytes, qd4310.o(.text.QD4310_SetLimit))
@@ -2637,8 +2637,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[239]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ARM_isnanf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[235]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_RestoreCalibration
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;foc_config
+<BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;foc_config
+<LI><a href="#[235]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_RestoreCalibration
 </UL>
 
 <P><STRONG><a name="[236]"></a>QD4310_SetPID</STRONG> (Thumb, 136 bytes, Stack size 56 bytes, qd4310.o(.text.QD4310_SetPID))
@@ -2646,8 +2646,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[239]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ARM_isnanf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[235]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_RestoreCalibration
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;foc_config
+<BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;foc_config
+<LI><a href="#[235]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_RestoreCalibration
 </UL>
 
 <P><STRONG><a name="[234]"></a>QD4310_SetUartBaudRate</STRONG> (Thumb, 68 bytes, Stack size 16 bytes, qd4310.o(.text.QD4310_SetUartBaudRate))
@@ -2657,8 +2657,8 @@ Global Symbols
 <LI><a href="#[210]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Init
 <LI><a href="#[205]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_DeInit
 </UL>
-<BR>[Called By]<UL><LI><a href="#[235]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_RestoreCalibration
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;foc_config
+<BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;foc_config
+<LI><a href="#[235]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_RestoreCalibration
 <LI><a href="#[233]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_LoadStorageCalibration
 </UL>
 
@@ -2755,8 +2755,8 @@ Global Symbols
 <LI><a href="#[250]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskCreate
 <LI><a href="#[247]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelete
 <LI><a href="#[24f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;shellInit
-<LI><a href="#[23f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RetargetInit
 <LI><a href="#[24e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USB_Disconnected
+<LI><a href="#[23f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RetargetInit
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> app_freertos.o(.text.MX_FREERTOS_Init)
 </UL>
@@ -3340,6 +3340,16 @@ Global Symbols
 <LI><a href="#[1b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_Init
 </UL>
 
+<P><STRONG><a name="[24e]"></a>USB_Disconnected</STRONG> (Thumb, 118 bytes, Stack size 32 bytes, startshell.o(.text.USB_Disconnected))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = USB_Disconnected &rArr; HAL_GPIO_Init
+</UL>
+<BR>[Calls]<UL><LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
+<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<LI><a href="#[16f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+</UL>
+<BR>[Called By]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartStartShell
+</UL>
+
 <P><STRONG><a name="[1a3]"></a>USB_EPClearStall</STRONG> (Thumb, 112 bytes, Stack size 8 bytes, stm32g4xx_ll_usb.o(.text.USB_EPClearStall))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = USB_EPClearStall
 </UL>
@@ -3410,6 +3420,113 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_out_char
 </UL>
 
+<P><STRONG><a name="[9d]"></a>foc_calibrate</STRONG> (Thumb, 252 bytes, Stack size 16 bytes, shellplugs.o(.text.foc_calibrate))
+<BR><BR>[Stack]<UL><LI>Max Depth = 640 + Unknown Stack Size
+<LI>Call Chain = foc_calibrate &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
+<LI><a href="#[22d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_Calibrate
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
+</UL>
+<P><STRONG><a name="[9c]"></a>foc_config</STRONG> (Thumb, 912 bytes, Stack size 152 bytes, shellplugs.o(.text.foc_config))
+<BR><BR>[Stack]<UL><LI>Max Depth = 792 + Unknown Stack Size
+<LI>Call Chain = foc_config &rArr; foc_config_list &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
+<LI><a href="#[2a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;foc_config_list
+<LI><a href="#[23a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_SetZeroPosition
+<LI><a href="#[234]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_SetUartBaudRate
+<LI><a href="#[236]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_SetPID
+<LI><a href="#[237]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_SetLimit
+<LI><a href="#[238]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_SetID
+<LI><a href="#[230]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_GetAngle
+<LI><a href="#[2a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;atof_lite
+<LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
+<LI><a href="#[2a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
+<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strncpy
+<LI><a href="#[2a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strchr
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
+</UL>
+<P><STRONG><a name="[2a4]"></a>foc_config_list</STRONG> (Thumb, 580 bytes, Stack size 16 bytes, shellplugs.o(.text.foc_config_list))
+<BR><BR>[Stack]<UL><LI>Max Depth = 640 + Unknown Stack Size
+<LI>Call Chain = foc_config_list &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
+<LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
+</UL>
+<BR>[Called By]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;foc_restore
+<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;foc_config
+</UL>
+
+<P><STRONG><a name="[9b]"></a>foc_ctrl</STRONG> (Thumb, 444 bytes, Stack size 16 bytes, shellplugs.o(.text.foc_ctrl))
+<BR><BR>[Stack]<UL><LI>Max Depth = 640 + Unknown Stack Size
+<LI>Call Chain = foc_ctrl &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
+<LI><a href="#[22f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_Ctrl
+<LI><a href="#[2a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;atof_lite
+<LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
+<LI><a href="#[2a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
+</UL>
+<P><STRONG><a name="[9e]"></a>foc_disable</STRONG> (Thumb, 76 bytes, Stack size 8 bytes, shellplugs.o(.text.foc_disable))
+<BR><BR>[Stack]<UL><LI>Max Depth = 632 + Unknown Stack Size
+<LI>Call Chain = foc_disable &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
+<LI><a href="#[23d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_Stop
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
+</UL>
+<P><STRONG><a name="[9f]"></a>foc_enable</STRONG> (Thumb, 128 bytes, Stack size 8 bytes, shellplugs.o(.text.foc_enable))
+<BR><BR>[Stack]<UL><LI>Max Depth = 632 + Unknown Stack Size
+<LI>Call Chain = foc_enable &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
+<LI><a href="#[23b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_Start
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
+</UL>
+<P><STRONG><a name="[a1]"></a>foc_info</STRONG> (Thumb, 456 bytes, Stack size 16 bytes, shellplugs.o(.text.foc_info))
+<BR><BR>[Stack]<UL><LI>Max Depth = 640 + Unknown Stack Size
+<LI>Call Chain = foc_info &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
+</UL>
+<P><STRONG><a name="[9a]"></a>foc_restore</STRONG> (Thumb, 100 bytes, Stack size 8 bytes, shellplugs.o(.text.foc_restore))
+<BR><BR>[Stack]<UL><LI>Max Depth = 648 + Unknown Stack Size
+<LI>Call Chain = foc_restore &rArr; foc_config_list &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
+<LI><a href="#[2a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;foc_config_list
+<LI><a href="#[235]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_RestoreCalibration
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
+</UL>
+<P><STRONG><a name="[a0]"></a>foc_status</STRONG> (Thumb, 472 bytes, Stack size 16 bytes, shellplugs.o(.text.foc_status))
+<BR><BR>[Stack]<UL><LI>Max Depth = 640 + Unknown Stack Size
+<LI>Call Chain = foc_status &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
+<LI><a href="#[230]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_GetAngle
+<LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
+</UL>
+<P><STRONG><a name="[99]"></a>foc_store</STRONG> (Thumb, 156 bytes, Stack size 8 bytes, shellplugs.o(.text.foc_store))
+<BR><BR>[Stack]<UL><LI>Max Depth = 632 + Unknown Stack Size
+<LI>Call Chain = foc_store &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
+<LI><a href="#[22e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_FreezeStorageCalibration
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
+</UL>
 <P><STRONG><a name="[ba]"></a>main</STRONG> (Thumb, 70 bytes, Stack size 8 bytes, main.o(.text.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 312 + Unknown Stack Size
 <LI>Call Chain = main &rArr; MX_ADC1_Init &rArr; HAL_ADC_Init &rArr; HAL_ADC_MspInit &rArr; HAL_GPIO_Init
@@ -3472,6 +3589,14 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[21c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_FREERTOS_Init
 </UL>
 
+<P><STRONG><a name="[96]"></a>print_version</STRONG> (Thumb, 136 bytes, Stack size 16 bytes, shellplugs.o(.text.print_version))
+<BR><BR>[Stack]<UL><LI>Max Depth = 640 + Unknown Stack Size
+<LI>Call Chain = print_version &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
+</UL>
 <P><STRONG><a name="[2a1]"></a>printf_</STRONG> (Thumb, 52 bytes, Stack size 32 bytes, printf.o(.text.printf_))
 <BR><BR>[Stack]<UL><LI>Max Depth = 624 + Unknown Stack Size
 <LI>Call Chain = printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
@@ -3832,6 +3957,25 @@ Global Symbols
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;shellClear
 </UL>
 
+<P><STRONG><a name="[97]"></a>shell_reboot</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, shellplugs.o(.text.shell_reboot))
+<BR><BR>[Calls]<UL><LI><a href="#[307]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_SystemReset
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
+</UL>
+<P><STRONG><a name="[95]"></a>shell_silent</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, shellplugs.o(.text.shell_silent))
+<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
+</UL>
+<P><STRONG><a name="[98]"></a>shell_upgrade</STRONG> (Thumb, 200 bytes, Stack size 8 bytes, shellplugs.o(.text.shell_upgrade))
+<BR><BR>[Stack]<UL><LI>Max Depth = 632 + Unknown Stack Size
+<LI>Call Chain = shell_upgrade &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
+<LI><a href="#[23d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_Stop
+<LI><a href="#[2a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jump_to_system_bootloader
+<LI><a href="#[16f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
+</UL>
 <P><STRONG><a name="[2ac]"></a>uxListRemove</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, list.o(.text.uxListRemove))
 <BR><BR>[Called By]<UL><LI><a href="#[247]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelete
 <LI><a href="#[2b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvCheckTasksWaitingTermination
@@ -4784,113 +4928,6 @@ Local Symbols
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;foc_config
 </UL>
 
-<P><STRONG><a name="[9d]"></a>foc_calibrate</STRONG> (Thumb, 252 bytes, Stack size 16 bytes, shellplugs.o(.text.foc_calibrate))
-<BR><BR>[Stack]<UL><LI>Max Depth = 640 + Unknown Stack Size
-<LI>Call Chain = foc_calibrate &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
-</UL>
-<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
-<LI><a href="#[22d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_Calibrate
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
-</UL>
-<P><STRONG><a name="[9c]"></a>foc_config</STRONG> (Thumb, 912 bytes, Stack size 152 bytes, shellplugs.o(.text.foc_config))
-<BR><BR>[Stack]<UL><LI>Max Depth = 792 + Unknown Stack Size
-<LI>Call Chain = foc_config &rArr; foc_config_list &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
-</UL>
-<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
-<LI><a href="#[23a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_SetZeroPosition
-<LI><a href="#[234]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_SetUartBaudRate
-<LI><a href="#[236]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_SetPID
-<LI><a href="#[237]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_SetLimit
-<LI><a href="#[238]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_SetID
-<LI><a href="#[230]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_GetAngle
-<LI><a href="#[2a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;foc_config_list
-<LI><a href="#[2a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;atof_lite
-<LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
-<LI><a href="#[2a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
-<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strncpy
-<LI><a href="#[2a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strchr
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
-</UL>
-<P><STRONG><a name="[2a4]"></a>foc_config_list</STRONG> (Thumb, 580 bytes, Stack size 16 bytes, shellplugs.o(.text.foc_config_list))
-<BR><BR>[Stack]<UL><LI>Max Depth = 640 + Unknown Stack Size
-<LI>Call Chain = foc_config_list &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
-</UL>
-<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
-<LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
-</UL>
-<BR>[Called By]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;foc_restore
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;foc_config
-</UL>
-
-<P><STRONG><a name="[9b]"></a>foc_ctrl</STRONG> (Thumb, 444 bytes, Stack size 16 bytes, shellplugs.o(.text.foc_ctrl))
-<BR><BR>[Stack]<UL><LI>Max Depth = 640 + Unknown Stack Size
-<LI>Call Chain = foc_ctrl &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
-</UL>
-<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
-<LI><a href="#[22f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_Ctrl
-<LI><a href="#[2a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;atof_lite
-<LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
-<LI><a href="#[2a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
-</UL>
-<P><STRONG><a name="[9e]"></a>foc_disable</STRONG> (Thumb, 76 bytes, Stack size 8 bytes, shellplugs.o(.text.foc_disable))
-<BR><BR>[Stack]<UL><LI>Max Depth = 632 + Unknown Stack Size
-<LI>Call Chain = foc_disable &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
-</UL>
-<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
-<LI><a href="#[23d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_Stop
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
-</UL>
-<P><STRONG><a name="[9f]"></a>foc_enable</STRONG> (Thumb, 128 bytes, Stack size 8 bytes, shellplugs.o(.text.foc_enable))
-<BR><BR>[Stack]<UL><LI>Max Depth = 632 + Unknown Stack Size
-<LI>Call Chain = foc_enable &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
-</UL>
-<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
-<LI><a href="#[23b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_Start
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
-</UL>
-<P><STRONG><a name="[a1]"></a>foc_info</STRONG> (Thumb, 456 bytes, Stack size 16 bytes, shellplugs.o(.text.foc_info))
-<BR><BR>[Stack]<UL><LI>Max Depth = 640 + Unknown Stack Size
-<LI>Call Chain = foc_info &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
-</UL>
-<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
-</UL>
-<P><STRONG><a name="[9a]"></a>foc_restore</STRONG> (Thumb, 100 bytes, Stack size 8 bytes, shellplugs.o(.text.foc_restore))
-<BR><BR>[Stack]<UL><LI>Max Depth = 648 + Unknown Stack Size
-<LI>Call Chain = foc_restore &rArr; foc_config_list &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
-</UL>
-<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
-<LI><a href="#[235]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_RestoreCalibration
-<LI><a href="#[2a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;foc_config_list
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
-</UL>
-<P><STRONG><a name="[a0]"></a>foc_status</STRONG> (Thumb, 472 bytes, Stack size 16 bytes, shellplugs.o(.text.foc_status))
-<BR><BR>[Stack]<UL><LI>Max Depth = 640 + Unknown Stack Size
-<LI>Call Chain = foc_status &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
-</UL>
-<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
-<LI><a href="#[230]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_GetAngle
-<LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
-</UL>
-<P><STRONG><a name="[99]"></a>foc_store</STRONG> (Thumb, 156 bytes, Stack size 8 bytes, shellplugs.o(.text.foc_store))
-<BR><BR>[Stack]<UL><LI>Max Depth = 632 + Unknown Stack Size
-<LI>Call Chain = foc_store &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
-</UL>
-<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
-<LI><a href="#[22e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_FreezeStorageCalibration
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
-</UL>
 <P><STRONG><a name="[2a6]"></a>jump_to_system_bootloader</STRONG> (Thumb, 94 bytes, Stack size 16 bytes, shellplugs.o(.text.jump_to_system_bootloader))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = jump_to_system_bootloader &rArr; HAL_RCC_DeInit &rArr; HAL_InitTick &rArr; HAL_NVIC_SetPriority
 </UL>
@@ -4901,58 +4938,21 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;shell_upgrade
 </UL>
 
-<P><STRONG><a name="[96]"></a>print_version</STRONG> (Thumb, 136 bytes, Stack size 16 bytes, shellplugs.o(.text.print_version))
-<BR><BR>[Stack]<UL><LI>Max Depth = 640 + Unknown Stack Size
-<LI>Call Chain = print_version &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
-</UL>
-<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
-</UL>
-<P><STRONG><a name="[97]"></a>shell_reboot</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, shellplugs.o(.text.shell_reboot))
-<BR><BR>[Calls]<UL><LI><a href="#[307]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_SystemReset
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
-</UL>
-<P><STRONG><a name="[95]"></a>shell_silent</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, shellplugs.o(.text.shell_silent))
-<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
-</UL>
-<P><STRONG><a name="[98]"></a>shell_upgrade</STRONG> (Thumb, 200 bytes, Stack size 8 bytes, shellplugs.o(.text.shell_upgrade))
-<BR><BR>[Stack]<UL><LI>Max Depth = 632 + Unknown Stack Size
-<LI>Call Chain = shell_upgrade &rArr; printf_ &rArr; _vsnprintf &rArr; _ftoa &rArr; _etoa &rArr;  _ftoa (Cycle)
-</UL>
-<BR>[Calls]<UL><LI><a href="#[2a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printf_
-<LI><a href="#[23d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QD4310_Stop
-<LI><a href="#[2a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;jump_to_system_bootloader
-<LI><a href="#[16f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> shellplugs.o(shellCommand)
-</UL>
 <P><STRONG><a name="[90]"></a>silent</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, shellplugs.o(.text.silent))
-<BR>[Address Reference Count : 13]<UL><LI> shellplugs.o(.text.shell_upgrade)
-<LI> shellplugs.o(.text.foc_store)
-<LI> shellplugs.o(.text.foc_restore)
-<LI> shellplugs.o(.text.foc_ctrl)
-<LI> shellplugs.o(.text.foc_config)
-<LI> shellplugs.o(.text.foc_calibrate)
-<LI> shellplugs.o(.text.foc_disable)
-<LI> shellplugs.o(.text.foc_enable)
+<BR>[Address Reference Count : 13]<UL><LI> shellplugs.o(.text.foc_info)
 <LI> shellplugs.o(.text.foc_status)
-<LI> shellplugs.o(.text.foc_info)
 <LI> shellplugs.o(.text.foc_config_list)
+<LI> shellplugs.o(.text.foc_config)
+<LI> shellplugs.o(.text.foc_ctrl)
+<LI> shellplugs.o(.text.foc_enable)
+<LI> shellplugs.o(.text.foc_disable)
+<LI> shellplugs.o(.text.foc_calibrate)
+<LI> shellplugs.o(.text.foc_restore)
+<LI> shellplugs.o(.text.foc_store)
+<LI> shellplugs.o(.text.shell_upgrade)
 <LI> shellplugs.o(.text.shell_silent)
 <LI> shellplugs.o(.text.print_version)
 </UL>
-<P><STRONG><a name="[24e]"></a>USB_Disconnected</STRONG> (Thumb, 118 bytes, Stack size 32 bytes, startshell.o(.text.USB_Disconnected))
-<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = USB_Disconnected &rArr; HAL_GPIO_Init
-</UL>
-<BR>[Calls]<UL><LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
-<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
-<LI><a href="#[16f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
-</UL>
-<BR>[Called By]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartStartShell
-</UL>
-
 <P><STRONG><a name="[ed]"></a>CAN_Transmit</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, communicatetask.o(.text.CAN_Transmit))
 <BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = CAN_Transmit &rArr; HAL_FDCAN_AddMessageToTxFifoQ &rArr; FDCAN_CopyMessageToRAM
 </UL>

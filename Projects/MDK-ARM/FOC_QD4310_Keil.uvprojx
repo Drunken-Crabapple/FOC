@@ -338,7 +338,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-std=gnu11 -include sys_public.h -Wno-packed -Wno-dollar-in-identifier-extension</MiscControls>
+              <MiscControls>-std=gnu11 -include sys_public.h -Wno-packed -Wno-dollar-in-identifier-extension -Wno-padded -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-strict-prototypes -Wno-conversion -Wno-missing-field-initializers -Wno-sign-conversion -Wno-cast-align -Wno-double-promotion -Wno-gnu-zero-variadic-macro-arguments -Wno-missing-noreturn -Wno-cast-qual -Wno-bad-function-cast -Wno-switch-enum -Wno-covered-switch-default -Wno-unused-parameter -Wno-shadow -Wno-date-time -Wno-missing-braces -Wno-newline-eof -Wno-format-nonliteral -Wno-unreachable-code-return</MiscControls>
               <Define>USE_HAL_DRIVER,STM32G431xx,SHELL_CFG_USER=\"shell_cfg_user.h\"</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Core\Inc;..\..\Applications\Inc;..\..\BSP;..\..\BSP\retarget;..\..\USB_Device\App;..\..\USB_Device\Target;..\..\UserLib\FOC;..\..\UserLib\FOC\base_classes;..\..\UserLib\QD4310;..\..\UserLib\PID;..\..\UserLib\LetterShell\Inc;..\..\Drivers\STM32G4xx_HAL_Driver\Inc;..\..\Drivers\STM32G4xx_HAL_Driver\Inc\Legacy;..\..\Drivers\CMSIS\Device\ST\STM32G4xx\Include;..\..\Drivers\CMSIS\Core\Include;..\..\Middlewares\Third_Party\FreeRTOS\Source\include;..\..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2;..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\GCC\ARM_CM4F;..\..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc;..\..\Middlewares\ST\STM32_USB_Device_Library\Class\CDC\Inc</IncludePath>
