@@ -677,12 +677,12 @@ ARM Macro Assembler    Page 11
               00000400 
               00000200 
               00000000 
-Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --depend=.
-.\..\output\startup_stm32g431xx_keil.d -o..\..\output\startup_stm32g431xx_keil.
-o -I.\RTE\_FOC_QD4310_Keil -IC:\Keil_v5\ARM\CMSIS\Include -IC:\Keil_v5\ARM\PACK
-\Keil\STM32G4xx_DFP\2.2.0\Drivers\CMSIS\Device\ST\STM32G4xx\Include --predefine
-="__UVISION_VERSION SETA 527" --predefine="STM32G431xx SETA 1" --list=..\..\out
-put\startup_stm32g431xx_keil.lst ..\..\startup_stm32g431xx_keil.s
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp.sp --depen
+d=..\..\output\startup_stm32g431xx_keil.d -o..\..\output\startup_stm32g431xx_ke
+il.o -ID:\keil_5.40_packs\Keil\STM32G4xx_DFP\2.2.0\Drivers\CMSIS\Device\ST\STM3
+2G4xx\Include --predefine="__UVISION_VERSION SETA 540" --predefine="STM32G431xx
+ SETA 1" --list=..\..\output\startup_stm32g431xx_keil.lst ..\..\startup_stm32g4
+31xx_keil.s
 
 
 

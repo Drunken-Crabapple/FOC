@@ -1,8 +1,6 @@
 ../../output/startshell.o: ../../Applications/Shell/StartShell.c \
   ../../BSP\sys_public.h \
   ../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2\cmsis_os2.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdint.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stddef.h \
   ../../Drivers/STM32G4xx_HAL_Driver/Inc\stm32g4xx_hal.h \
   ../../Core/Inc\stm32g4xx_hal_conf.h \
   ../../Drivers/STM32G4xx_HAL_Driver/Inc\stm32g4xx_hal_rcc.h \
@@ -10,11 +8,6 @@
   ../../Drivers/CMSIS/Device/ST/STM32G4xx/Include\stm32g4xx.h \
   ../../Drivers/CMSIS/Device/ST/STM32G4xx/Include/stm32g431xx.h \
   ../../Drivers/CMSIS/Core/Include\core_cm4.h \
-  ../../Drivers/CMSIS/Core/Include/cmsis_version.h \
-  ../../Drivers/CMSIS/Core/Include/cmsis_compiler.h \
-  ../../Drivers/CMSIS/Core/Include/cmsis_armclang_ltm.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\arm_compat.h \
-  ../../Drivers/CMSIS/Core/Include/mpu_armv7.h \
   ../../Drivers/CMSIS/Device/ST/STM32G4xx/Include/system_stm32g4xx.h \
   ../../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h \
   ../../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_rcc_ex.h \
@@ -48,9 +41,6 @@
   ../../Middlewares/ST/STM32_USB_Device_Library/Core/Inc\usbd_ioreq.h \
   ../../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h \
   ../../USB_Device/Target\usbd_conf.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdio.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\string.h \
   ../../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h \
   ../../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h \
   ../../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h \
@@ -59,7 +49,6 @@
   ../../UserLib/LetterShell/Inc/shell_cfg.h \
   ../../UserLib/LetterShell/Inc/shell_cfg_user.h \
   ../../BSP\retarget/retarget.h ../../BSP/retarget/printf.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdarg.h \
   ../../Middlewares/Third_Party/FreeRTOS/Source/include\FreeRTOS.h \
   ../../Core/Inc\FreeRTOSConfig.h \
   ../../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h \

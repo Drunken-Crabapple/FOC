@@ -1,8 +1,6 @@
 ../../output/foctask.o: ../../Applications/Src/FOCTask.c \
   ../../BSP\sys_public.h \
   ../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2\cmsis_os2.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdint.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stddef.h \
   ../../Drivers/STM32G4xx_HAL_Driver/Inc\stm32g4xx_hal.h \
   ../../Core/Inc\stm32g4xx_hal_conf.h \
   ../../Drivers/STM32G4xx_HAL_Driver/Inc\stm32g4xx_hal_rcc.h \
@@ -10,11 +8,6 @@
   ../../Drivers/CMSIS/Device/ST/STM32G4xx/Include\stm32g4xx.h \
   ../../Drivers/CMSIS/Device/ST/STM32G4xx/Include/stm32g431xx.h \
   ../../Drivers/CMSIS/Core/Include\core_cm4.h \
-  ../../Drivers/CMSIS/Core/Include/cmsis_version.h \
-  ../../Drivers/CMSIS/Core/Include/cmsis_compiler.h \
-  ../../Drivers/CMSIS/Core/Include/cmsis_armclang_ltm.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\arm_compat.h \
-  ../../Drivers/CMSIS/Core/Include/mpu_armv7.h \
   ../../Drivers/CMSIS/Device/ST/STM32G4xx/Include/system_stm32g4xx.h \
   ../../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h \
   ../../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_rcc_ex.h \
@@ -43,11 +36,9 @@
   ../../Drivers/STM32G4xx_HAL_Driver/Inc\stm32g4xx_hal_uart.h \
   ../../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
   ../../UserLib/FOC/base_classes\CurrentSensor.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdbool.h \
   ../../UserLib/FOC/base_classes\Encoder.h ../../UserLib/PID\PID.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\math.h ../../Core/Inc\main.h \
-  ../../Applications/Inc\task_public.h ../../UserLib/FOC\FOC.h \
-  ../../UserLib/FOC/base_classes\BLDC_Driver.h \
+  ../../Core/Inc\main.h ../../Applications/Inc\task_public.h \
+  ../../UserLib/FOC\FOC.h ../../UserLib/FOC/base_classes\BLDC_Driver.h \
   ../../UserLib/FOC/base_classes\Filter.h \
   ../../Applications/Inc\FOC_config.h ../../Core/Inc\tim.h \
   ../../Core/Inc\spi.h ../../Core/Inc\adc.h ../../BSP\Encoder_MT6826S.h \
@@ -55,5 +46,4 @@
   ../../BSP\Storage_EmbeddedFlash.h \
   ../../UserLib/FOC/base_classes\Storage.h \
   ../../BSP\CurrentSensor_Embed.h ../../UserLib/FOC\filters_c.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\string.h \
   ../../UserLib/QD4310\QD4310.h

@@ -1,4 +1,4 @@
---cpu=Cortex-M4.fp
+--cpu=Cortex-M4.fp.sp
 "..\..\output\startup_stm32g431xx_keil.o"
 "..\..\output\adc.o"
 "..\..\output\app_freertos.o"

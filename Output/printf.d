@@ -1,7 +1,5 @@
 ../../output/printf.o: ../../BSP/retarget/printf.c ../../BSP\sys_public.h \
   ../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2\cmsis_os2.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdint.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stddef.h \
   ../../Drivers/STM32G4xx_HAL_Driver/Inc\stm32g4xx_hal.h \
   ../../Core/Inc\stm32g4xx_hal_conf.h \
   ../../Drivers/STM32G4xx_HAL_Driver/Inc\stm32g4xx_hal_rcc.h \
@@ -9,11 +7,6 @@
   ../../Drivers/CMSIS/Device/ST/STM32G4xx/Include\stm32g4xx.h \
   ../../Drivers/CMSIS/Device/ST/STM32G4xx/Include/stm32g431xx.h \
   ../../Drivers/CMSIS/Core/Include\core_cm4.h \
-  ../../Drivers/CMSIS/Core/Include/cmsis_version.h \
-  ../../Drivers/CMSIS/Core/Include/cmsis_compiler.h \
-  ../../Drivers/CMSIS/Core/Include/cmsis_armclang_ltm.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\arm_compat.h \
-  ../../Drivers/CMSIS/Core/Include/mpu_armv7.h \
   ../../Drivers/CMSIS/Device/ST/STM32G4xx/Include/system_stm32g4xx.h \
   ../../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h \
   ../../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_rcc_ex.h \
@@ -41,7 +34,4 @@
   ../../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h \
   ../../Drivers/STM32G4xx_HAL_Driver/Inc\stm32g4xx_hal_uart.h \
   ../../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdbool.h \
-  ../../BSP/retarget/printf.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdarg.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\float.h
+  ../../BSP/retarget/printf.h
