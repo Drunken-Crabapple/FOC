@@ -1,0 +1,20 @@
+; Keil scatter file for QDrive FOC on STM32G431CBUx
+; Matches the original GCC memory plan:
+; FLASH      0x08000000..0x080197FF  application image
+; FLASH_DATA 0x0801D800..0x0801FFFF  calibration/config storage
+; RAM        0x20000000..0x20006FFF
+; CCMRAM     0x20007000..0x20007FFF
+
+LR_IROM1 0x08000000 0x00019800  {
+  ER_IROM1 0x08000000 0x00019800  {
+    *.o (RESET, +First)
+    *(InRoot$$Sections)
+    .ANY (+RO)
+  }
+  RW_IRAM1 0x20000000 0x00007000  {
+    .ANY (+RW +ZI)
+  }
+  RW_CCMRAM 0x20007000 0x00001000  {
+    * (.ccmram*)
+  }
+}
