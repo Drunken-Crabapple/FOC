@@ -42,7 +42,7 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-#define QDRIVE_USB_SHELL_ONLY 0
+
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -54,21 +54,21 @@ osThreadId_t DebugTaskHandle;
 const osThreadAttr_t DebugTask_attributes = {
   .name = "DebugTask",
   .priority = (osPriority_t) osPriorityNormal,
-  .stack_size = 128 * 4
+  .stack_size = 64 * 4
 };
 /* Definitions for FOCTask */
 osThreadId_t FOCTaskHandle;
 const osThreadAttr_t FOCTask_attributes = {
   .name = "FOCTask",
   .priority = (osPriority_t) osPriorityRealtime,
-  .stack_size = 256 * 4
+  .stack_size = 128 * 4
 };
 /* Definitions for CommunicateTask */
 osThreadId_t CommunicateTaskHandle;
 const osThreadAttr_t CommunicateTask_attributes = {
   .name = "CommunicateTask",
   .priority = (osPriority_t) osPriorityAboveNormal,
-  .stack_size = 256 * 4
+  .stack_size = 128 * 4
 };
 /* Definitions for StartShell */
 osThreadId_t StartShellHandle;
@@ -121,14 +121,10 @@ void MX_FREERTOS_Init(void) {
   DebugTaskHandle = osThreadNew(StartDebugTask, NULL, &DebugTask_attributes);
 
   /* creation of FOCTask */
-#if QDRIVE_USB_SHELL_ONLY == 0
   FOCTaskHandle = osThreadNew(StartFOCTask, NULL, &FOCTask_attributes);
-#endif
 
   /* creation of CommunicateTask */
-#if QDRIVE_USB_SHELL_ONLY == 0
   CommunicateTaskHandle = osThreadNew(StartCommunicateTask, NULL, &CommunicateTask_attributes);
-#endif
 
   /* creation of StartShell */
   StartShellHandle = osThreadNew(StartStartShell, NULL, &StartShell_attributes);
@@ -152,7 +148,8 @@ void MX_FREERTOS_Init(void) {
 /* USER CODE END Header_StartDebugTask */
 __weak void StartDebugTask(void *argument)
 {
-  (void)argument;
+  /* init code for USB_Device */
+  MX_USB_Device_Init();
   /* USER CODE BEGIN StartDebugTask */
   /* Infinite loop */
   for(;;)
@@ -166,3 +163,4 @@ __weak void StartDebugTask(void *argument)
 /* USER CODE BEGIN Application */
 
 /* USER CODE END Application */
+

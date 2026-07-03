@@ -1,10 +1,10 @@
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.30)
 
-project(foc LANGUAGES C)
+project(foc)
 
 add_library(foc INTERFACE)
 
-target_sources(foc INTERFACE FOC.c)
+target_sources(foc INTERFACE FOC.cpp)
 
 target_include_directories(foc INTERFACE
         ./

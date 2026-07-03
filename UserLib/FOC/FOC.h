@@ -1,144 +1,210 @@
+/**
+ * @file        FOC.cpp
+ * @brief       FOC驱动库
+ * @details
+ * @author      Liu-Curiousity (2675794963@qq.com)
+ * @date        2026-6-14
+ * @version     V5.3.1
+ * @note        此库为中间层库,与硬件完全解耦
+ * @warning
+ * @par         历史版本:
+ *		        V1.0.0创建于2024-7-3
+ *		        v2.0.0修改于2024-7-10,添加d轴电流PID控制
+ *		        V3.0.0修改于2025-4-12,中间漏了好多版本
+ *		        V4.0.0修改于2025-5-4,添加CurrentSensor类,后将续从current_sensor中获取电流
+ *		        V4.1.0修改于2025-5-5,重命名PolePairs为pole_pairs,添加电流偏置校准和相电阻测量,并在电角度校准时自动调整硬拖电压
+ *		        V4.1.1修改于2025-5-6,校准相电流偏置前等待30ms,修复测量相电阻时忘记应用电流偏置校准导致相电阻测量误差的问题
+ *		        V4.1.2修改于2025-5-6,优化操作逻辑,开始校准前清除已校准标志
+ *		        V4.1.3修改于2025-5-6,更改校准函数名
+ *		        V5.0.0修改于2025-6-26,调整initialize,enable,start三层实现逻辑细节
+ *		        V5.0.0调整SetPhaseVoltage()参数顺序
+ *		        V5.1.0修改于2025-7-3,修复calibrate()函数致命问题,重新调整init,enable,start三层实现逻辑细节,为后续无感算法铺路,调整更新电压函数接口名称
+ *		        V5.2.0修改于2025-12-18,添加StepAngleCtrl控制模式,优化AngleCtrl控制模式下的角度环处理逻辑
+ *		        V5.2.1修改于2025-12-29,修复使能后间隔小于1ms发送角度控制指令会导致当次指令异常的问题
+ *		        V5.2.2修改于2026-1-25,更改角度模式和角度步进模式实现方式
+ *		        V5.2.3修改于2026-3-29,修复角度控制0点时偶现的突发旋转一周的问题
+ *		        V5.2.4修改于2026-5-2,修复低速模式下每发送一次控制指令都会顿一下的问题
+ *		        V5.3.0修改于2026-5-30,添加校准异常检测,提高校准速度,优化校准效果添加校准异常检测,提高校准速度,优化校准效果
+ *		        V5.3.1修改于2026-6-14,适配PID重构,修复若干问题
+ * @copyright   (c) 2026 QDrive
+ */
+
 #ifndef FOC_H
 #define FOC_H
 
-#include <stdbool.h>
-#include <stdint.h>
-#include <math.h>
-
-#include "PID.h"
+#include <cstdint>
 #include "BLDC_Driver.h"
-#include "Encoder.h"
 #include "CurrentSensor.h"
+#include "Encoder.h"
 #include "Filter.h"
+#include "PID.h"
 
-#ifndef FOC_PI
-#define FOC_PI  3.14159265358979323846f
-#endif
+/**
+ * @brief FOC句柄结构体
+ */
+class FOC {
+public:
+    enum class CtrlType {
+        CurrentCtrl = 0,
+        SpeedCtrl = 1,
+        AngleCtrl = 2,
+        StepAngleCtrl = 3,
+        LowSpeedCtrl = 4,
+    };
 
-#ifndef FOC_MAP_LEN
-#define FOC_MAP_LEN 2000U
-#endif
+    enum class CalibrationStatus {
+        Success = 0,
+        Busy = 1,
+        EnvironmentError = 2,
+        CurrentSensorError = 3,
+        DriverError = 4,
+        EncoderError = 5,
+        OtherError = 0xFF
+    };
 
+    /**
+     * @brief 初始化
+     * @param pole_pairs 极对数
+     * @param CtrlFrequency 控制频率,用于计算转速
+     * @param CurrentCtrlFrequency 电流控制频率,单位Hz
+     * @param CurrentQFilter Q轴电流采样滤波器系数
+     * @param CurrentDFilter D轴电流采样滤波器系数
+     * @param SpeedFilter 速度滤波器系数
+     * @param driver BLDC驱动
+     * @param encoder 编码器驱动
+     * @param current_sensor 电流传感器
+     * @param PID_CurrentQ Q轴电流PID
+     * @param PID_CurrentD D轴电流PID
+     * @param PID_Speed 速度PID
+     * @param PID_Angle 角度PID
+     */
+    FOC(const uint8_t pole_pairs, const uint16_t CtrlFrequency, const uint16_t CurrentCtrlFrequency,
+        Filter& CurrentQFilter, Filter& CurrentDFilter, Filter& SpeedFilter,
+        BLDC_Driver& driver, Encoder& encoder, CurrentSensor& current_sensor,
+        const PID& PID_CurrentQ, const PID& PID_CurrentD, const PID& PID_Speed, const PID& PID_Angle) :
+        pole_pairs(pole_pairs), CtrlFrequency(CtrlFrequency), CurrentCtrlFrequency(CurrentCtrlFrequency),
+        PID_CurrentQ(PID_CurrentQ), PID_CurrentD(PID_CurrentD), PID_Speed(PID_Speed), PID_Angle(PID_Angle),
+        bldc_driver(driver), bldc_encoder(encoder), current_sensor(current_sensor),
+        CurrentQFilter(CurrentQFilter), CurrentDFilter(CurrentDFilter), SpeedFilter(SpeedFilter) {
+        anticogging_map = new float[map_len]{};
+    }
 
-typedef enum
-{
-    FOC_CTRL_CURRENT = 0,       //电流控制模式
-    FOC_CTRL_SPEED = 1,         //速度控制模式
-    FOC_CTRL_ANGLE = 2,         //绝对角度
-    FOC_CTRL_STEP_ANGLE = 3,    //相对角度
-    FOC_CTRL_LOW_SPEED = 4,     //低速连续
-} FOC_CtrlType;
+    ~FOC() {
+        delete[] anticogging_map;
+    }
 
+    [[nodiscard]] CtrlType getCtrlType() const { return ctrl_type; } // 获取控制模式
+    [[nodiscard]] float getSpeed() const { return Speed; }           // 获取电机转速,单位rpm
+    [[nodiscard]] float getTargetSpeed() const { return PID_Speed.target; } // 获取目标转速,单位rpm
+    [[nodiscard]] float getAngle() const { return Angle; }           // 获取电机角度,单位rad
+    [[nodiscard]] float getCurrent() const { return Iq; }            // 获取Q轴电流,单位A
+    [[nodiscard]] float getDCurrent() const { return Id; }           // 获取D轴电流,单位A
+    [[nodiscard]] float getTargetCurrent() const { return target_iq; } // 获取目标Q轴电流,单位A
+    [[nodiscard]] float getQVoltage() const { return Uq * Voltage; } // 获取实际Q轴电压,单位V
+    [[nodiscard]] float getVoltage() const { return Voltage; }       // 获取母线电压,单位V
 
-typedef struct 
-{
-    uint8_t pole_pairs;                 //电机极对数，用于后续讲机械角度转化为电角度
-    uint16_t ctrl_frequency;            //外环控制频率
-    uint16_t current_ctrl_frequency;    //电流环控制频率
+    void init();
+    void enable();
+    void disable();
+    void start();
+    void stop();
+    CalibrationStatus calibrate();             // 基础校准
+    CalibrationStatus current_calibrate();     // 电流偏置校准
+    CalibrationStatus anticogging_calibrate(); // 抗齿槽校准
 
-    //标志位
-    bool initialized;
-    bool enabled;
-    bool started;
-    bool calibrated;
-    bool anticogging_enabled;
-    bool anticogging_calibrated;
-    bool anticogging_calibrating;
+    /**
+     * @brief FOC控制设置函数
+     * @param ctrl_type 控制类型
+     * @param value 控制值
+     */
+    void Ctrl(CtrlType ctrl_type, float value);
 
-    FOC_CtrlType ctrl_type;
-    
-    PID_t pid_current_q;    //电流环
-    PID_t pid_current_d;
-    PID_t pid_speed;        //速度环
-    PID_t pid_angle;        //角度环
+    /**
+     * @brief FOC控制(速度环、角度环)中断服务函数
+     */
+    void Ctrl_ISR();
 
-    BLDC_Driver_t *driver;              //电机驱动接口
-    Encoder_t *encoder;                 //编码器接口    
-    CurrentSensor_t *current_sensor;    //电流传感器接口
+    /**
+     * @brief FOC电流闭环控制中断服务函数
+     */
+    void loopCtrl();
 
-    Filter_t *current_q_filter;
-    Filter_t *current_d_filter;
-    Filter_t *speed_filter;
+    /**
+     * @brief 更新母线电压,用于调整控制回路增益
+     * @param voltage 母线电压,单位V
+     */
+    void updateVoltage(float voltage);
 
-    bool encoder_direction;     //编码器方向
-    float phase_resistance;     //相电阻
-    float phase_inductance;     //相电感
-    float iu_offset;            //u相电流零点偏移
-    float iv_offset;            //v相
-    float zero_electric_angle;  //零电角度偏移
+    // 初始化配置项
+    const uint8_t pole_pairs{};            // 极对数
+    const uint16_t CtrlFrequency{};        // 控制频率(速度环、角度环),单位Hz
+    const uint16_t CurrentCtrlFrequency{}; // 控制频率(电流环),单位Hz
 
-    float *anticogging_map;
+    bool initialized{false};            // 是否初始化
+    bool enabled{false};                // 是否使能
+    bool started{false};                // 是否启动
+    bool calibrated{false};             // 是否校准过
+    bool anticogging_enabled{false};    // 是否开启齿槽转矩补偿
+    bool anticogging_calibrated{false}; // 是否校准过齿槽转矩
 
-    float target_iq;
-    float angle;
-    float previous_angle;
-    float electrical_angle;
-    float speed;
-    float low_speed;        //低速模式专用
+protected:
+    //PID类
+    PID PID_CurrentQ;      //Q轴电流PID
+    PID PID_CurrentD;      //D轴电流PID
+    PID PID_Speed;         //速度PID
+    PID PID_Angle;         //角度PID
+    float target_iq{0.0f}; //目标Q轴电流
 
+    // 校准参数
+    bool encoder_direction{true};            // true if the encoder is in the same direction as the motor(Uq)
+    float phase_resistance{NAN};             // 相电阻,单位Ω
+    float phase_inductance{NAN};             // 相电感,单位H
+    float iu_offset{0};                      // U相电流偏置,单位A
+    float iv_offset{0};                      // V相电流偏置,单位A
+    float zero_electric_angle{0};            // 电机零点电角度,单位rad
+    static constexpr uint16_t map_len{2000}; // 齿槽转矩校准点数
+    float *anticogging_map{};                // 齿槽转矩补偿表
+    bool anticogging_calibrating{false};     // 齿槽转矩是否正在校准
 
-    /*
-        ADC采样出两相电流 据此算出第三相 做clark得出 ia,ib,做park得出id,iq
-        输入电流环pid 得到ud uq,做反clark 反park得出三相电压 输入控制器
-    */
-    float uu;
-    float uv;
-    float uw;
+    static float wrap(float value, float min, float max);
 
-    float ua;
-    float ub;
+private:
+    CtrlType ctrl_type{CtrlType::CurrentCtrl}; //当前控制类型
+    BLDC_Driver& bldc_driver;                  //驱动器
+    Encoder& bldc_encoder;                     //编码器
+    CurrentSensor& current_sensor;             //电流传感器
+    Filter& CurrentQFilter;                    //Q轴电流低通滤波器
+    Filter& CurrentDFilter;                    //D轴电流低通滤波器
+    Filter& SpeedFilter;                       //速度低通滤波器
 
-    float uq;
-    float ud;
+    // 运行时参数
+    float Angle{0};           // 当前电机角度,单位rad
+    float PreviousAngle{0};   // 上一次电机角度(速度环、角度环更新中),单位rad
+    float ElectricalAngle{0}; // 当前电机电角度,单位rad
+    float Speed{0};           // 电机转速,单位rpm
+    // 极低速控制
+    float low_speed{0}; // 单位rpm
 
-    float iu;
-    float iv;
-    float iw;
+    float Uu{0}; //U相电压
+    float Uv{0}; //V相电压
+    float Uw{0}; //W相电压
+    float Ua{0}; //A轴电压
+    float Ub{0}; //B轴电压
+    float Uq{0}; //切向电压
+    float Ud{0}; //法向电压
 
-    float ia;
-    float ib;
+    float Iu{0}; //U相电流,单位A
+    float Iv{0}; //V相电流,单位A
+    float Iw{0}; //W相电流,单位A
+    float Ia{0}; //A轴电流,单位A
+    float Ib{0}; //B轴电流,单位A
+    float Iq{0}; //Q轴电流,单位A
+    float Id{0}; //D轴电流,单位A
 
-    float iq;
-    float id;
+    float Voltage{1}; //母线电压
 
-    float voltage;
+    void UpdateCurrent(float iu, float iv, float iw);
+    void SetPhaseVoltage(float ud, float uq, float electrical_angle);
+};
 
-} FOC_t;  
-
-float FOC_Wrap(float value,float min,float max);
-
-void FOC_InitObject(FOC_t *foc,
-                    uint8_t pole_pairs,
-                    uint16_t ctrl_frequency,
-                    uint16_t current_ctrl_frequency,
-                    Filter_t *current_q_filter,
-                    Filter_t *current_d_filter,
-                    Filter_t *speed_filter,
-                    BLDC_Driver_t *driver,
-                    Encoder_t *encoder,
-                    CurrentSensor_t *current_sensor,
-                    const PID_t *pid_current_q,
-                    const PID_t *pid_current_d,
-                    const PID_t *pid_speed,
-                    const PID_t *pid_angle);
-
-void FOC_Init(FOC_t *foc);
-void FOC_Enable(FOC_t *foc);
-
-void FOC_Disable(FOC_t *foc);
-void FOC_Start(FOC_t *foc);
-void FOC_Stop(FOC_t *foc);
-
-void FOC_UpdateVoltage(FOC_t *foc,float voltage);
-void FOC_CurrentCalibrate(FOC_t *foc);
-void FOC_Calibrate(FOC_t *foc);
-
-
-void FOC_Ctrl(FOC_t *foc,FOC_CtrlType ctrl_type,float value);
-void FOC_CtrlISR(FOC_t *foc);
-void FOC_LoopCtrl(FOC_t *foc);
-void FOC_AnticoggingCalibrate(FOC_t *foc);
-
-
-
-#endif
+#endif //FOC_H

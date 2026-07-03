@@ -1,28 +1,46 @@
-#ifndef STORAGE_EMBEDDED_FLASH_H
-#define STORAGE_EMBEDDED_FLASH_H
+/**
+ * @brief 		Storage_EmbeddedFlash.h库文件
+ * @detail
+ * @author 	    Haoqi Liu
+ * @date        25-4-30
+ * @version 	V1.0.0
+ * @note 		
+ * @warning	    
+ * @par 		历史版本
+                V1.0.0创建于25-4-30
+ * */
+
+#ifndef STORAGE_EMBEDDEDFLASH_H
+#define STORAGE_EMBEDDEDFLASH_H
 
 #include "Storage.h"
 #include "main.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+class Storage_EmbeddedFlash final : public Storage {
+public:
+    Storage_EmbeddedFlash(const uint32_t STORAGE_ADDRESS_BASE, const uint32_t StorageSize) :
+        Storage(StorageSize), STORAGE_ADDRESS_BASE(STORAGE_ADDRESS_BASE) {}
 
-typedef struct {
-    uint32_t storage_address_base;
-    uint8_t page_buffer[FLASH_PAGE_SIZE];
-} Storage_EmbeddedFlash_Context_t;
+    void init() override { initialized = true; }
 
-extern Storage_t storage;
-extern Storage_EmbeddedFlash_Context_t storage_context;
+    void write(uint32_t addr, void *buff, uint32_t count) override;
 
-void Storage_EmbeddedFlash_Bind(Storage_t *storage,
-                                Storage_EmbeddedFlash_Context_t *context,
-                                uint32_t storage_address_base,
-                                uint32_t storage_size);
+    void read(uint32_t addr, void *buff, uint32_t count) override;
 
-#ifdef __cplusplus
-}
-#endif
+private:
+    const uint32_t STORAGE_ADDRESS_BASE; // 存储起始地址
+    inline static uint8_t page_buffer[FLASH_PAGE_SIZE]{};
 
-#endif
+    /**
+     * @brief 往页中写入数据
+     * @param page 第几页
+     * @param addr 当前页的相对地址
+     * @param pdata 待写入数据
+     * @param count 写入数据的长度
+     */
+    static void write_page_bytes(uint32_t page, uint32_t addr, const void *pdata, uint32_t count);
+};
+
+extern Storage_EmbeddedFlash storage;
+
+#endif //STORAGE_EMBEDDEDFLASH_H

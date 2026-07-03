@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.30)
 
-project(letter_shell LANGUAGES C)
+project(letter_shell)
 
 add_library(letter_shell INTERFACE)
 

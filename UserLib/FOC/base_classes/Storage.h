@@ -1,21 +1,50 @@
+/**
+ * @file        Storage.h
+ * @brief 		a library for storage datas using embedded flash
+ * @detail
+ * @author      Liu-Curiousity (2675794963@qq.com)
+ * @date        26-3-8
+ * @version 	V2.1.0
+ * @note 		
+ * @warning	    
+ * @par 		history
+                V1.0.0 on 25-4-22
+                V2.0.0 on 25-12-23, add storage_size member variable
+                V2.1.0 on 26-3-8, verify the uint8_t * to void *
+ * @copyright   (c) 2026 QDrive
+ * */
+
 #ifndef STORAGE_H
 #define STORAGE_H
 
-#include <stdbool.h>
-#include <stdint.h>
+#include <cstdint>
 
-typedef struct Storage Storage_t;
+class Storage {
+public:
+    explicit Storage(const uint32_t StorageSize) : storage_size(StorageSize) {}
+    virtual ~Storage() = default;
+    // user should define constructor self, just to assign the member variables. it should decouple from the hardware
 
-struct Storage
-{
-    bool initialized;
-    uint32_t storage_size;
+    bool initialized = false;
+    const uint32_t storage_size = 0; // storage size in bytes
 
-    void (*init)(Storage_t *storage);
-    void (*write)(Storage_t *storage,uint32_t addr,const void *buff,uint32_t count);
-    void (*read)(Storage_t *storage,uint32_t addr,void *buff,uint32_t count);
+    virtual void init() = 0;
 
-    void *context;
+    /**
+     * @brief 向储存区写入count个字节
+     * @param addr 储存区地址(类似于VMA)
+     * @param buff 写入缓冲区
+     * @param count 写入字节数
+     */
+    virtual void write(uint32_t addr, void *buff, uint32_t count) = 0;
+
+    /**
+     * @brief 从储存区读出count个字节
+     * @param addr 储存区地址(类似于VMA)
+     * @param buff 读出缓冲区
+     * @param count 读取字节数
+     */
+    virtual void read(uint32_t addr, void *buff, uint32_t count) = 0;
 };
 
-#endif
+#endif //STORAGE_H

@@ -31,14 +31,6 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-static USBD_CDC_LineCodingTypeDef line_coding =
-{
-  115200, /* bitrate */
-  0x00,   /* 1 stop bit */
-  0x00,   /* no parity */
-  0x08    /* 8 data bits */
-};
-static uint16_t control_line_state;
 
 /* USER CODE END PV */
 
@@ -228,38 +220,14 @@ static int8_t CDC_Control_FS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
   /* 6      | bDataBits  |   1   | Number Data bits (5, 6, 7, 8 or 16).          */
   /*******************************************************************************/
     case CDC_SET_LINE_CODING:
-      if ((pbuf != NULL) && (length >= 7U))
-      {
-        line_coding.bitrate = (uint32_t)(pbuf[0] |
-                                 ((uint32_t)pbuf[1] << 8) |
-                                 ((uint32_t)pbuf[2] << 16) |
-                                 ((uint32_t)pbuf[3] << 24));
-        line_coding.format = pbuf[4];
-        line_coding.paritytype = pbuf[5];
-        line_coding.datatype = pbuf[6];
-      }
 
     break;
 
     case CDC_GET_LINE_CODING:
-      if ((pbuf != NULL) && (length >= 7U))
-      {
-        pbuf[0] = (uint8_t)(line_coding.bitrate);
-        pbuf[1] = (uint8_t)(line_coding.bitrate >> 8);
-        pbuf[2] = (uint8_t)(line_coding.bitrate >> 16);
-        pbuf[3] = (uint8_t)(line_coding.bitrate >> 24);
-        pbuf[4] = line_coding.format;
-        pbuf[5] = line_coding.paritytype;
-        pbuf[6] = line_coding.datatype;
-      }
 
     break;
 
     case CDC_SET_CONTROL_LINE_STATE:
-      if (pbuf != NULL)
-      {
-        control_line_state = (uint16_t)(pbuf[2] | ((uint16_t)pbuf[3] << 8));
-      }
 
     break;
 

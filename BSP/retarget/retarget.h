@@ -10,27 +10,12 @@ extern "C" {
 #define STDIO_SUPPORT 1
 
 #include "stm32g4xx_hal.h"
-#if defined(__ARMCC_VERSION)
-#define S_IFCHR 0020000
-struct stat {
-    int st_mode;
-};
-#else
 #include <sys/stat.h>
-#endif
 
 #if USE_TinyPrintf == 1
 
 #include "printf.h"
 
-#endif
-
-#ifndef EIO
-#define EIO 5
-#endif
-
-#ifndef EBADF
-#define EBADF 9
 #endif
 
 #if STDIO_SUPPORT == 1
@@ -57,7 +42,7 @@ int _fstat(int fd, struct stat *st);
 
 void RetargetInit(void);
 void CDC_Receive_FS_Callback(uint8_t *Buf, uint32_t *Len);
-void CDC_TransmitCplt_FS_Callback(void);
+void CDC_TransmitCplt_FS_Callback();
 signed short shellRead(char *data, unsigned short len);
 signed short shellWrite(char *data, unsigned short len);
 

@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.30)
 
-project(pid LANGUAGES C)
+project(pid)
 
 add_library(pid INTERFACE)
 

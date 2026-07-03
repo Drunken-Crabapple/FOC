@@ -1742,10 +1742,10 @@ static void shellWriteCommandHelp(Shell *shell, char *cmd)
  * @param argc 参数个数
  * @param argv 参数
  */
-int shellHelp(int argc, char *argv[])
+void shellHelp(int argc, char *argv[])
 {
     Shell *shell = shellGetCurrent();
-    SHELL_ASSERT(shell, return 0);
+    SHELL_ASSERT(shell, return);
     if (argc == 1)
     {
         shellListAll(shell);
@@ -1754,7 +1754,6 @@ int shellHelp(int argc, char *argv[])
     {
         shellWriteCommandHelp(shell, argv[1]);
     }
-    return 0;
 }
 SHELL_EXPORT_CMD(
 SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_MAIN)|SHELL_CMD_DISABLE_RETURN,
